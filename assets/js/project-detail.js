@@ -1,0 +1,21 @@
+(() => {
+ const params=new URLSearchParams(location.search),id=params.get('id')||'church',p=window.PROJECTS[id]||window.PROJECTS.church;
+ document.title=p.title+' — Jordin Johns';
+ document.getElementById('detailCategory').textContent=p.category;
+ document.getElementById('detailIndex').textContent=String(Object.keys(window.PROJECTS).indexOf(id)+1).padStart(2,'0')+' / 09';
+ document.getElementById('detailType').textContent=p.type;
+ const words=p.title.split(' '), cut=Math.max(1,Math.ceil(words.length/2));
+ document.getElementById('detailTitle').innerHTML=words.slice(0,cut).join(' ')+'<br><em>'+words.slice(cut).join(' ')+'</em>';
+ document.getElementById('detailIntro').textContent=p.intro;
+ document.getElementById('detailDescription').textContent=p.description;
+ document.getElementById('detailMeta').innerHTML=p.software.map(s=>'<span>'+s+'</span>').join('');
+ const gallery=document.getElementById('detailGallery');
+ gallery.innerHTML=p.images.map(([src,caption],i)=>`<figure class="gallery-item" tabindex="0" role="button" aria-label="Open ${caption}"><img src="assets/images/${src}" alt="${caption}" loading="${i===0?'eager':'lazy'}"><figcaption>${String(i+1).padStart(2,'0')} / ${caption.toUpperCase()}</figcaption></figure>`).join('');
+ const keys=Object.keys(window.PROJECTS),next=keys[(keys.indexOf(id)+1)%keys.length];document.getElementById('nextProject').href='project.html?id='+next;
+ const box=document.getElementById('lightbox'),img=document.getElementById('lightboxImage'),cap=document.getElementById('lightboxCaption');let current=0;
+ const open=i=>{current=i;const [src,caption]=p.images[current];img.src='assets/images/'+src;img.alt=caption;cap.textContent=caption.toUpperCase();box.classList.add('open');box.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';};
+ const close=()=>{box.classList.remove('open');box.setAttribute('aria-hidden','true');document.body.style.overflow='';};
+ const move=n=>open((current+n+p.images.length)%p.images.length);
+ [...gallery.querySelectorAll('.gallery-item')].forEach((el,i)=>{el.addEventListener('click',()=>open(i));el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open(i)}})});
+ document.getElementById('lightboxClose').addEventListener('click',close);document.getElementById('lightboxPrev').addEventListener('click',()=>move(-1));document.getElementById('lightboxNext').addEventListener('click',()=>move(1));box.addEventListener('click',e=>{if(e.target===box)close()});addEventListener('keydown',e=>{if(!box.classList.contains('open'))return;if(e.key==='Escape')close();if(e.key==='ArrowLeft')move(-1);if(e.key==='ArrowRight')move(1)});
+})();

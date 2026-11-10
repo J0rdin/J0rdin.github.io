@@ -1,0 +1,29 @@
+JORDIN JOHNS — GAME ARTIST PORTFOLIO
+===================================
+
+This is a rebuilt, self-contained static website.
+
+PREVIEW
+1. Extract this ZIP.
+2. Open index.html in Chrome or Edge.
+3. For the best local preview, open a terminal in this folder and run:
+   python -m http.server 8000
+4. Visit http://localhost:8000
+
+GITHUB PAGES
+1. Create a new GitHub repository.
+2. Upload ALL contents of this folder (not the ZIP itself).
+3. Keep index.html in the repository root.
+4. Go to Settings > Pages.
+5. Select Deploy from a branch > main > /(root), then Save.
+
+All project images are included in assets/images.
+The site uses local HTML, CSS, JavaScript and image files.
+It does not require npm, a build step, or external font downloads.
+
+Pages:
+- index.html       Home / About / Profile / Contact
+- projects.html    Project archive with category filters
+- project.html     Individual project case studies
+
+Before publishing, verify the email and LinkedIn links in the HTML.
